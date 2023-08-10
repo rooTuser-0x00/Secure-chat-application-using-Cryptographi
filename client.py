@@ -1,3 +1,5 @@
+# ID: 210129
+# Name: Amar Dagaura
 import os
 try:
     import pyaes
@@ -11,8 +13,8 @@ import json
 from datetime import datetime
 
 print("[+] Client Running ")
-HOST = str(input('[+] Enter Destination IP   : ')) #where you want to connect to
-PORT = int(input('[+] Enter Destination Port : ')) #in which port you want to connect
+HOST = str(input('[+] Enter Destination IP   : '))
+PORT = int(input('[+] Enter Destination Port : '))
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((HOST, PORT))
@@ -34,7 +36,7 @@ def process_bytes(bytess):
             print("Block Size Mismatch ")
     return ret
 
-def process_text(data): #take data in as a string return 16 bytes block of bytes list
+def process_text(data): 
     streams = []
     while (len(data)>0):
         if(len(data)>=16):
@@ -87,7 +89,6 @@ class myThread(threading.Thread):
                                 mess+=str(chr(ch))
                     try:
                         data_recv = json.loads(mess)
-                        #message = str(data_recv['message'])
                         verify_and_display(data_recv)
                     except:
                         print('Unrecognised Data or Broken PIPE ')
@@ -115,14 +116,11 @@ while 1:
         "message"   : sending_data,
         "hash"      : mess_hash
     }
-
     send_json_string = json.dumps(send_data)
     sending_bytes = process_text(send_json_string)
     enc_bytes = []
     for byte in sending_bytes:
         ciphertext = aes.encrypt(byte)
         enc_bytes += bytes(ciphertext)
-    #print("Sending : "+str(sending_data))
     s.send(bytes(enc_bytes))
 s.close() 
-#code never reaches here , but just in case ... :p

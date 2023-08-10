@@ -1,3 +1,5 @@
+# ID: 210129
+# Name: Amar Dagaura
 import os
 try:
     import pyaes
@@ -57,7 +59,7 @@ def process_bytes(bytess):
             print("Block Size Mismatch ")
     return ret
 
-def process_text(data): #take data in as a string return 16 bytes block of bytes list
+def process_text(data): 
     streams = []
     while (len(data)>0):
         if(len(data)>=16):
@@ -93,7 +95,6 @@ class myThread(threading.Thread):
                                 mess+=str(chr(ch))
                     try:
                         data_recv = json.loads(mess)
-                        #message = str(data_recv['message'])
                         verify_and_display(data_recv)
                     except:
                         print('Unrecognised Data or Broken PIPE ')
@@ -129,6 +130,5 @@ while 1:
     for byte in sending_bytes:
         ciphertext = aes.encrypt(byte)
         enc_bytes += bytes(ciphertext)
-    #print("Sending : "+str(sending_data))
     conn.send(bytes(enc_bytes))
 conn.close()
